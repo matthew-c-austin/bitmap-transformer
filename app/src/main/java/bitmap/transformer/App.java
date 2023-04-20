@@ -3,8 +3,11 @@
  */
 package bitmap.transformer;
 
-import java.awt.image.BufferedImage;
+
 import java.io.File;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.Color;
 
 public class App {
     public static void main(String[] args) {
