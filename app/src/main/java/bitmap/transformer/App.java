@@ -4,7 +4,9 @@
 package bitmap.transformer;
 
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.Color;
@@ -26,7 +28,7 @@ public class App {
     public class Bitmap {
         private final BufferedImage bitmap;
 
-        public Bitmap(File file) {
+        public Bitmap(Path filePath) {
             // TODO: Implement constructor to read bitmap from file
         }
 
@@ -41,7 +43,7 @@ public class App {
         public void invertColors() {
             // TODO: Implement invert colors transform
         }
-        public void save(File file) throws IOException {
+        public void save(Path filePath) throws IOException {
             // TODO: Implement save method to write bitmap to file
         }
     }
