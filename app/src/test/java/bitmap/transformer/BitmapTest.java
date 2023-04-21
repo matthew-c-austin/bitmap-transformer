@@ -43,25 +43,25 @@ class BitmapTest {
         System.out.println(ANSI_GREEN + "testFlipHorizontally() - test passed successfully" + ANSI_RESET);
     }
 
-//    @Test
-//    public void testGrayscale() throws IOException {
-//        // I'm throwing in the towel with this one because it appears that Photoshop's grayscale algorithm is more complex than the simple one we used, which produces different results. They are probably doing something based on perceived luminance and weighted averages.
-//        actualBitmap.toGrayscale();
-//        BufferedImage expectedBitmap = ImageIO.read(grayscaleFilePath.toFile());
-//        compareImageDimensions(expectedBitmap, actualBitmap.getBitmap());
-//        comparePixelRGB(expectedBitmap, actualBitmap.getBitmap());
-//        System.out.println(ANSI_GREEN + "testGrayscale() - test passed successfully" + ANSI_RESET);
-//    }
+    @Test
+    public void testGrayscale() throws IOException {
+        // I'm throwing in the towel with this one because it appears that Photoshop's grayscale algorithm is more complex than the simple one we used, which produces different results. They are probably doing something based on perceived luminance and weighted averages.
+        actualBitmap.toGrayscale();
+        BufferedImage expectedBitmap = ImageIO.read(grayscaleFilePath.toFile());
+        compareImageDimensions(expectedBitmap, actualBitmap.getBitmap());
+        comparePixelRGB(expectedBitmap, actualBitmap.getBitmap());
+        System.out.println(ANSI_GREEN + "testGrayscale() - test passed successfully" + ANSI_RESET);
+    }
 
-//    @Test
-//    public void testInvertColors() throws IOException {
-//        // I'm throwing in the towel with this one because it appears that Photoshop's inversion algorithm is more complex than the simple one we used, which produces different results. They are probably doing something based on perceived luminance and weighted averages.
-//        actualBitmap.invertColors();
-//        BufferedImage expectedBitmap = ImageIO.read(invertedFilePath.toFile());
-//        compareImageDimensions(expectedBitmap, actualBitmap.getBitmap());
-//        comparePixelRGB(expectedBitmap, actualBitmap.getBitmap());
-//        System.out.println(ANSI_GREEN + "testInvertColors() - test passed successfully" + ANSI_RESET);
-//    }
+    @Test
+    public void testInvertColors() throws IOException {
+        // I'm throwing in the towel with this one because it appears that Photoshop's inversion algorithm is more complex than the simple one we used, which produces different results. They are probably doing something based on perceived luminance and weighted averages.
+        actualBitmap.invertColors();
+        BufferedImage expectedBitmap = ImageIO.read(invertedFilePath.toFile());
+        compareImageDimensions(expectedBitmap, actualBitmap.getBitmap());
+        comparePixelRGB(expectedBitmap, actualBitmap.getBitmap());
+        System.out.println(ANSI_GREEN + "testInvertColors() - test passed successfully" + ANSI_RESET);
+    }
 
     public void compareImageDimensions(BufferedImage expectedBitmap, BufferedImage actualBitmap) {
         // Make sure the images are the same heights and widths
