@@ -31,7 +31,7 @@ class AppTest {
     @Test
     public void testMainThrowsExceptionWithUnsupportedTransform() throws IOException {
         try {
-            String[] args = {"src/test/resources/baldy-8bit.bmp", "baldy-8bit-grayscale.bmp", "huh?"};
+            String[] args = {"src/test/resources/test.bmp", "baldy-8bit-grayscale.bmp", "huh?"};
             App.main(args);
             // if the exception is not thrown, fail the test
             fail("Expected IllegalArgumentException to be thrown, but no exception was thrown.");
