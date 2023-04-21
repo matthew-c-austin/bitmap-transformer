@@ -3,7 +3,6 @@
  */
 package bitmap.transformer;
 
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,24 +11,51 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 
 public class App {
-    public static void main(String[] args) {
-        // TODO: Add error catching for incorrect argument length
+    public static void main(String[] args) throw{
 
-        // TODO: Create input and output files
-        // TODO: define transform
+        if (args.length != 3){
+            throw new IllegalArgumentException("Usage: ./gradlew run --args \"input-file.bmp output-file.bmp transform\"");
+        }
+
+        Path inputPath = Paths.get(args[0]);
+        Path outputPath = Paths.get(args[1]);
+        String transform = args[2];
 
         // TODO: Catch input file DNE and output file already exists
 
-        // TODO: Instantiate Bitmap class and use either switch cases or conditionals to perform the desired transform
+        Bitmap bitmap = new Bitmap(inputPath);
+        switch (transform){
+            case "f":
+                bitmap.flipHorizontally();
+                break;
+            case "g":
+                bitmap.toGrayscale();
+                break;
+            case "i":
+                bitmap.invertColors();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported transform. Available transforms:\n\"f\" to flip the image horizontally\n\"g\" to convert the image to grayscale\n\"i\" to invert the colors of hte image\n");
+        }
 
-        // TODO: Save the output file (with error catching) and then println that the transformation is complete
+        bitmap.save(outputPath);
+        System.out.println("Transform success! Output saved to" + outputPath.toAbsolutePath());
     }
 
     public class Bitmap {
         private final BufferedImage bitmap;
+        // These are not final because there may be a transformation in the future to alter them (such as resizing)
+        private int width;
+        private int height;
 
-        public Bitmap(Path filePath) {
-            // TODO: Implement constructor to read bitmap from file
+        public Bitmap(Path filePath) throws IOException {
+            try{
+                this.bitmap = ImageIO.read(filePath.toFile());
+                this.width = bitmap.getWidth();
+                this.height = bitmap.getHeight();
+            } catch (IOException ioe){
+                ioe.printStackTrace();
+            }
         }
 
         public void flipHorizontally() {
@@ -37,7 +63,21 @@ public class App {
         }
 
         public void toGrayscale() {
-            // TODO: Implement grayscale transform
+            // Iterate over each pixel and calculate their average value, then update that pixel's color
+            for (int row = 0; row < this.height; row++){
+                for(int column = 0; column < this.width; column++){
+                    int pixel = bitmap.getRGB(column, row);
+                    Color color = new Color(pixel);
+
+                    int red = color.getRed();
+                    int green = color.getGreen();
+                    int blue = color.getBlue();
+                    int avg = (red + green + blue)/3;
+
+                    Color newColor = new Color(avg, avg, avg);
+                    bitmap.setRGB(column, row, newColor.getRGB());
+                }
+            }
         }
 
         public void invertColors() {
