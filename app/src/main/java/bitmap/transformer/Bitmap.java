@@ -25,6 +25,11 @@ import java.nio.file.Path;
             }
         }
 
+        // We need a getter for testing
+        public BufferedImage getBitmap() {
+            return bitmap;
+        }
+
         public void flipHorizontally() {
             // Iterate through half the width of the image and flip the RGB values of the corresponding pixel mirrored at the halfway mark
             for (int row = 0; row < this.height; row++){
@@ -50,7 +55,7 @@ import java.nio.file.Path;
                     int blue = color.getBlue();
                     int avg = (red + green + blue)/3;
 
-                    Color newColor = new Color(avg, avg, avg);
+                    Color newColor = new Color(avg, avg, avg, color.getAlpha());
                     bitmap.setRGB(column, row, newColor.getRGB());
                 }
             }
@@ -66,8 +71,9 @@ import java.nio.file.Path;
                     int invertRed = 255 - color.getRed();
                     int invertGreen = 255 - color.getGreen();
                     int invertBlue = 255 - color.getBlue();
+                    int invertAlpha = 255 - color.getAlpha();
 
-                    Color newColor = new Color(invertRed, invertGreen, invertBlue);
+                    Color newColor = new Color(invertRed, invertGreen, invertBlue, invertAlpha);
                     bitmap.setRGB(column, row, newColor.getRGB());
                 }
             }
