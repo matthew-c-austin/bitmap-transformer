@@ -15,3 +15,7 @@ To Use:
 ./gradlew run --args "input-file.bmp output-file.bmp transform"
 ```
 
+## Collaborators
+
+Stephen Levesque
+Matt Austin
