@@ -3,48 +3,37 @@
  */
 package bitmap.transformer;
 
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.awt.Color;
 
 public class App {
-    public static void main(String[] args) {
-        // TODO: Add error catching for incorrect argument length
-
-        // TODO: Create input and output files
-        // TODO: define transform
-
-        // TODO: Catch input file DNE and output file already exists
-
-        // TODO: Instantiate Bitmap class and use either switch cases or conditionals to perform the desired transform
-
-        // TODO: Save the output file (with error catching) and then println that the transformation is complete
-    }
-
-    public class Bitmap {
-        private final BufferedImage bitmap;
-
-        public Bitmap(Path filePath) {
-            // TODO: Implement constructor to read bitmap from file
+    public static void main(String[] args) throws IOException {
+        // Make sure the user inputs the correct number of arguments
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Usage: ./gradlew run --args \"input-file.bmp output-file.bmp transform\"");
         }
 
-        public void flipHorizontally() {
-            // TODO: Implement flip horizontally transform
+        Path inputPath = Paths.get(args[0]);
+        Path outputPath = Paths.get(args[1]);
+        String transform = args[2];
+
+        Bitmap bitmap = new Bitmap(inputPath);
+        switch (transform) {
+            case "f":
+                bitmap.flipHorizontally();
+                break;
+            case "g":
+                bitmap.toGrayscale();
+                break;
+            case "i":
+                bitmap.invertColors();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported transform. Available transforms:\n\"f\" to flip the image horizontally\n\"g\" to convert the image to grayscale\n\"i\" to invert the colors of the image\n");
         }
 
-        public void toGrayscale() {
-            // TODO: Implement grayscale transform
-        }
-
-        public void invertColors() {
-            // TODO: Implement invert colors transform
-        }
-        public void save(Path filePath) throws IOException {
-            // TODO: Implement save method to write bitmap to file
-        }
+        bitmap.save(outputPath);
+        System.out.println("Transform success! Output saved to" + outputPath.toAbsolutePath());
     }
 }
