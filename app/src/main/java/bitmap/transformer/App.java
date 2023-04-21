@@ -6,14 +6,12 @@ package bitmap.transformer;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.awt.Color;
+
 
 public class App {
-    public void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         // Make sure the user inputs the correct number of arguments
-        if (args.length != 3){
+        if (args.length != 3) {
             throw new IllegalArgumentException("Usage: ./gradlew run --args \"input-file.bmp output-file.bmp transform\"");
         }
 
@@ -22,7 +20,7 @@ public class App {
         String transform = args[2];
 
         Bitmap bitmap = new Bitmap(inputPath);
-        switch (transform){
+        switch (transform) {
             case "f":
                 bitmap.flipHorizontally();
                 break;
@@ -38,78 +36,5 @@ public class App {
 
         bitmap.save(outputPath);
         System.out.println("Transform success! Output saved to" + outputPath.toAbsolutePath());
-    }
-
-    public class Bitmap {
-        private BufferedImage bitmap;
-        // These are not final because there may be a transformation in the future to alter them (such as resizing)
-        private int width;
-        private int height;
-
-        public Bitmap(Path filePath) throws IOException {
-            try{
-                this.bitmap = ImageIO.read(filePath.toFile());
-                this.width = bitmap.getWidth();
-                this.height = bitmap.getHeight();
-            } catch (IOException ioe){
-                ioe.printStackTrace();
-            }
-        }
-
-        public void flipHorizontally() {
-            // Iterate through half the width of the image and flip the RGB values of the corresponding pixel mirrored at the halfway mark
-
-            for (int row = 0; row < this.height; row++){
-                for(int column = 0; column < this.width / 2; column++){
-                    int mirroredPixel = bitmap.getRGB(width - column - 1, row);
-                    int currentPixel = bitmap.getRGB(column, row);
-
-                    bitmap.setRGB(column, row, mirroredPixel);
-                    bitmap.setRGB(width - column - 1, row, currentPixel);
-                }
-            }
-        }
-
-        public void toGrayscale() {
-            // Iterate over each pixel and calculate their average value, then update that pixel's color
-            for (int row = 0; row < this.height; row++){
-                for(int column = 0; column < this.width; column++){
-                    int pixel = bitmap.getRGB(column, row);
-                    Color color = new Color(pixel);
-
-                    int red = color.getRed();
-                    int green = color.getGreen();
-                    int blue = color.getBlue();
-                    int avg = (red + green + blue)/3;
-
-                    Color newColor = new Color(avg, avg, avg);
-                    bitmap.setRGB(column, row, newColor.getRGB());
-                }
-            }
-        }
-
-        public void invertColors() {
-            // Iterate over each pixel and calculate their inverse, i.e., 255 - color, then update that pixel's color
-            for (int row = 0; row < this.height; row++){
-                for(int column = 0; column < this.width; column++){
-                    int pixel = bitmap.getRGB(column, row);
-                    Color color = new Color(pixel);
-
-                    int red = color.getRed();
-                    int green = color.getGreen();
-                    int blue = color.getBlue();
-
-                    Color newColor = new Color(255 - red, 255 - green, 255 - blue);
-                    bitmap.setRGB(column, row, newColor.getRGB());
-                }
-            }
-        }
-        public void save(Path filePath) throws IOException {
-            try{
-                 ImageIO.write(this.bitmap, "bmp", filePath.toFile());
-            } catch (IOException ioe){
-                ioe.printStackTrace();
-            }
-        }
     }
 }

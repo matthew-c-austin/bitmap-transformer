@@ -4,11 +4,40 @@
 package bitmap.transformer;
 
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    // Declaring ANSI_RESET so that we can reset the color
+    public static final String ANSI_RESET = "\u001B[0m";
+    // Declaring ANSI_GREEN to color the successful test souts :)
+    public static final String ANSI_GREEN = "\u001B[32m";
+    @Test
+    public void testMainThrowsExceptionWithNoArguments() throws IOException {
+        try {
+            String[] args = {};
+            App.main(args);
+            // if the exception is not thrown, fail the test
+            fail("Expected IllegalArgumentException to be thrown, but no exception was thrown.");
+        } catch (IllegalArgumentException e) {
+            // the exception was thrown, the test passes
+            System.out.println(ANSI_GREEN + "testMainThrowsExceptionWithNoArguments() - test passed successfully" + ANSI_RESET);
+        }
+    }
+
+    @Test
+    public void testMainThrowsExceptionWithUnsupportedTransform() throws IOException {
+        try {
+            String[] args = {"src/test/resources/baldy-8bit.bmp", "baldy-8bit-grayscale.bmp", "huh?"};
+            App.main(args);
+            // if the exception is not thrown, fail the test
+            fail("Expected IllegalArgumentException to be thrown, but no exception was thrown.");
+        } catch (IllegalArgumentException e) {
+            // the exception was thrown, the test passes
+            System.out.println(ANSI_GREEN + "testMainThrowsExceptionWithUnsupportedTransform() - test passed successfully" + ANSI_RESET);
+        }
     }
 }
