@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 public class App {
     public static void main(String[] args) throws IOException {
         // Make sure the user inputs the correct number of arguments
@@ -31,7 +30,7 @@ public class App {
                 bitmap.invertColors();
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported transform. Available transforms:\n\"f\" to flip the image horizontally\n\"g\" to convert the image to grayscale\n\"i\" to invert the colors of hte image\n");
+                throw new IllegalArgumentException("Unsupported transform. Available transforms:\n\"f\" to flip the image horizontally\n\"g\" to convert the image to grayscale\n\"i\" to invert the colors of the image\n");
         }
 
         bitmap.save(outputPath);

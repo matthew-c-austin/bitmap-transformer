@@ -21,13 +21,12 @@ import java.nio.file.Path;
                 this.width = bitmap.getWidth();
                 this.height = bitmap.getHeight();
             } catch (IOException ioe){
-//                ioe.printStackTrace();
+                ioe.printStackTrace();
             }
         }
 
         public void flipHorizontally() {
             // Iterate through half the width of the image and flip the RGB values of the corresponding pixel mirrored at the halfway mark
-
             for (int row = 0; row < this.height; row++){
                 for(int column = 0; column < (this.width + 1) / 2; column++){
                     int mirroredPixel = bitmap.getRGB(width - column - 1, row);
@@ -73,6 +72,7 @@ import java.nio.file.Path;
                 }
             }
         }
+
         public void save(Path filePath) throws IOException {
             try{
                  ImageIO.write(this.bitmap, "bmp", filePath.toFile());
